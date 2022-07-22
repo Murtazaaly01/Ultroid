@@ -104,8 +104,8 @@ async def _(event):
                 download=True,
                 backgroundColor=choice(ATRA_COL),
             )
-            url = "https://telegra.ph" + uf(li)[-1]
-            OUT = f"[\xad]({url})" + OUT
+            url = f"https://telegra.ph{uf(li)[-1]}"
+            OUT = f"[\xad]({url}){OUT}"
             out = "**• OUTPUT:**"
             remove(li)
         else:
@@ -211,8 +211,10 @@ async def _(event):
         return await xx.edit(
             "`You cannot use this command now. Contact owner of this bot!`"
         )
-    if any(item in cmd for item in KEEP_SAFE().All) and (
-        not (event.out or event.sender_id == ultroid_bot.uid)
+    if (
+        any(item in cmd for item in KEEP_SAFE().All)
+        and not event.out
+        and event.sender_id != ultroid_bot.uid
     ):
         warning = await event.forward_to(udB.get_key("LOG_CHANNEL"))
         await warning.reply(
